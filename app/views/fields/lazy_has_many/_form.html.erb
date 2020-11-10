@@ -1,8 +1,37 @@
 <div class="field-unit__label">
-  <%= f.label field.attribute, for: "#{f.object_name}_#{field.attribute_key}" %>
+  <%= f.label field.permitted_attribute.keys[0], for: "#{f.object_name}_#{field.attribute_key}" %>
 </div>
-<div class="field-unit__field">
-  <%= f.select(field.attribute_key, nil, {}, multiple: true) do %>
-    <%= options_for_select(field.associated_resource_options, field.selected_options) %>
-  <% end %>
+
+<div class="field-unit__field"
+     data-component="lazy-has-many"
+     data-lazy-has-many="<%=
+       {
+         url: field.templated_action,
+         value: field.value_attribute,
+         label: field.label_attribute
+       }.to_json
+     %>"
+>
+  <%#= f.select(field.attribute_key, nil, {}, multiple: true) do %>
+    <%#= options_for_select(field.associated_resource_options, field.selected_options) %>
+  <%# end %>
+
+
+  <%= f.hidden_field(field.permitted_attribute.keys[0]) %>
+
+  <button type="button" disabled="disabled" class="button lazy_has_many__button"><%= field.current_value %></button>
+
+  <div class="popout lazy_has_many__popout" data-target="popout">
+    <input type="search" class="lazy_has_many__popout_search" placeholder="Search..." aria-label="Search input">
+    <i class="icon">
+      <svg width="18" height="18" viewBox="0 0 24 24" focusable="false" role="presentation">
+        <path d="M16.436 15.085l3.94 4.01a1 1 0 0 1-1.425 1.402l-3.938-4.006a7.5 7.5 0 1 1 1.423-1.406zM10.5 16a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11z" fill="currentColor" fill-rule="evenodd"></path>
+      </svg>
+    </i>
+    <output class="results" data-target="output">
+      <select data-max-size="<%= field.size %>" aria-label="Select a result">
+        <option></option>
+      </select>
+    </output>
+  </div>
 </div>

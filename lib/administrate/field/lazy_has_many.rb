@@ -8,6 +8,7 @@ module Administrate
     class LazyHasMany < Administrate::Field::HasMany
       include LazyHasManyVersion
 
+      class Error < StandardError; end
       class Engine < ::Rails::Engine
         # Administrate::Engine.add_javascript 'administrate-field-lazy_has_many/application'
         # Administrate::Engine.add_stylesheet 'administrate-field-lazy_has_many/application'
@@ -15,7 +16,31 @@ module Administrate
         isolate_namespace Administrate
       end
 
-      class Error < StandardError; end
+      def templated_action
+        options.fetch(:action).call(self, q: '{q}')
+      end
+
+      def value_attribute
+        options.fetch(:value_attribute) { 'id' }
+      end
+
+      def label_attribute
+        options.fetch(:label_attribute) { 'name' }
+      end
+
+      def current_value
+        if data
+          data.map do |value|
+            associated_dashboard.display_resource(value)
+          end
+        else
+          display_placeholder
+        end
+      end
+
+      def size
+        options.fetch(:size) { 10 }
+      end
 
       private
       def candidate_resources
