@@ -5,11 +5,16 @@ function bindLazyHasManys() {
     const target = lazySelect.querySelector('input[type="hidden"]')
     const input = lazySelect.querySelector('input[type="search"]')
     const selectedData = lazySelect.querySelector('.selected-data')
-    let removeItemX
+    let removeItemX = lazySelect.querySelectorAll('.selected-data .close')
+    if (removeItemX.forEach) {
+      removeItemX.forEach(e => e.addEventListener('click', removeClickedItem))
+    }
     const popout = lazySelect.querySelector('[data-target="popout"]')
     const output = lazySelect.querySelector('[data-target="output"]')
     const select = output.querySelector('select')
-    const pickedValues = {}
+    let pickedValues = JSON.parse(selectedData.dataset.initial) || {}
+    console.log("initial", selectedData.dataset.initial )
+    console.log("pickedValues", pickedValues )
 
     const options = JSON.parse(lazySelect.getAttribute('data-lazy-has-many'))
 
@@ -116,16 +121,20 @@ function bindLazyHasManys() {
 
 
     function removeValue(value) {
+      console.log("removeValue", value, "pikedvalue", pickedValues)
       delete pickedValues[value]
+      console.log("now", value, "pikedvalue", pickedValues)
       renderSelectedData(pickedValues)
     }
 
     function pickValue(value, label) {
+      console.log("pickValue", value, label)
       // TODO: remove if duplicate
       pickedValues[value] = label
       renderSelectedData(pickedValues)
 
       removeItemX = lazySelect.querySelectorAll('.selected-data .close')
+      removeItemX.forEach(e => e.removeEventListener('click', removeClickedItem))
       removeItemX.forEach(e => e.addEventListener('click', removeClickedItem))
 
       hidePopout()
@@ -134,7 +143,7 @@ function bindLazyHasManys() {
     select.addEventListener('click', (e) => {
       if (e.target.value && e.target.value === e.currentTarget.value) {
         pickValue(
-          e.currentTarget.value,
+          parseInt(e.currentTarget.value),
           e.currentTarget.options[e.currentTarget.selectedIndex].textContent
         )
 
@@ -149,7 +158,7 @@ function bindLazyHasManys() {
       }
 
       pickValue(
-        e.currentTarget.value,
+        parseInt(e.currentTarget.value),
         e.currentTarget.options[e.currentTarget.selectedIndex].textContent
       )
     })

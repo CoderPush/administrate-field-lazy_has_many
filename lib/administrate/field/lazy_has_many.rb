@@ -29,7 +29,7 @@ module Administrate
       end
 
       def current_values
-        data
+        data.map {|e| [e.public_send(value_attribute), e.public_send(label_attribute)]}.to_h
       end
 
       def size

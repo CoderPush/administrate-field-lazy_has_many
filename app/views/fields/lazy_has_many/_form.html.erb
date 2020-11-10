@@ -12,19 +12,16 @@
        }.to_json
      %>"
 >
-  <%#= f.select(field.attribute_key, nil, {}, multiple: true) do %>
-    <%#= options_for_select(field.associated_resource_options, field.selected_options) %>
-  <%# end %>
+  <%= f.hidden_field(field.attribute_key, value: JSON.generate(field.current_values.keys)) %>
 
-
-  <%= f.hidden_field(field.attribute_key) %>
-
-  <div class="selected-data" disabled="disabled">
-    <%= field.display_placeholder %>
-    <% field.current_values.each do |value| %>
+  <div class="selected-data" disabled="disabled" data-initial="<%= JSON.generate(field.current_values) %>">
+    <% if field.current_values.empty? %>
+      <%= field.display_placeholder %>
+    <% end %>
+    <% field.current_values.each do |key, value| %>
       <span class="badge badge-primary mr-1">
         <%= value %>
-        <button type="button" class="close" aria-label="Dismiss">
+        <button type="button" class="close" aria-label="Dismiss" data-remove="<%= key %>">
           <span aria-hidden="true">&times;</span>
         </button>
       </span>
