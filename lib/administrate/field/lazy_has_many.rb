@@ -29,17 +29,17 @@ module Administrate
       end
 
       def current_value
-        if data
-          data.map do |value|
-            associated_dashboard.display_resource(value)
-          end
-        else
-          display_placeholder
-        end
+        display_placeholder
       end
 
       def size
         options.fetch(:size) { 10 }
+      end
+
+      def display_placeholder
+        options.fetch(:placeholder) do
+          format('Select a %<association>s', association: associated_class.name)
+        end
       end
 
       private
