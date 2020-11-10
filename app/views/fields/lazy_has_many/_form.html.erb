@@ -19,11 +19,17 @@
 
   <%= f.hidden_field(field.attribute_key) %>
 
-  <button type="button" disabled="disabled" class="button lazy_has_many__button">
+  <div class="selected-data" disabled="disabled">
+    <%= field.display_placeholder %>
     <% field.current_values.each do |value| %>
-      <%= value %>, 
+      <span class="badge badge-primary mr-1">
+        <%= value %>
+        <button type="button" class="close" aria-label="Dismiss">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </span>
     <% end %>
-  </button>
+  </div>
 
   <div class="popout lazy_has_many__popout" data-target="popout">
     <input type="search" class="lazy_has_many__popout_search" placeholder="Search..." aria-label="Search input">

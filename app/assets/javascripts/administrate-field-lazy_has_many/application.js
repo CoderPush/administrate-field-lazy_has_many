@@ -4,10 +4,12 @@ function bindLazyHasManys() {
   lazySelects.forEach(lazySelect => {
     const target = lazySelect.querySelector('input[type="hidden"]')
     const input = lazySelect.querySelector('input[type="search"]')
-    const button = lazySelect.querySelector('button[type="button"]')
+    const button = lazySelect.querySelector('.selected-data')
     const popout = lazySelect.querySelector('[data-target="popout"]')
     const output = lazySelect.querySelector('[data-target="output"]')
     const select = output.querySelector('select')
+    const pickedValues = new Set()
+    const pickedLabels = new Set()
 
     const options = JSON.parse(lazySelect.getAttribute('data-lazy-has-many'))
 
@@ -97,16 +99,28 @@ function bindLazyHasManys() {
     })
 
     function pickValue(value, label) {
-      target.value = value
-      button.textContent = label
+      // TODO: remove if duplicate
+      pickedValues.add(value)
+      pickedLabels.add(label)
+
+      target.value = JSON.stringify(Array.from(pickedValues))
+      button.innerHTML = Array.from(pickedLabels).map(e => `
+      <span class="badge badge-primary mr-1">
+        ${e}
+        <button type="button" class="close" aria-label="Dismiss">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </span>
+      `).join("")
+
       hidePopout()
     }
 
     select.addEventListener('click', (e) => {
       if (e.target.value && e.target.value === e.currentTarget.value) {
         pickValue(
-          e.target.value,
-          e.target.textContent
+          e.currentTarget.value,
+          e.currentTarget.options[e.currentTarget.selectedIndex].textContent
         )
 
         e.stopImmediatePropagation()
@@ -121,7 +135,7 @@ function bindLazyHasManys() {
 
       pickValue(
         e.currentTarget.value,
-        e.currentTarget.textContent
+        e.currentTarget.options[e.currentTarget.selectedIndex].textContent
       )
     })
 

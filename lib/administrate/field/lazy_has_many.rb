@@ -29,7 +29,7 @@ module Administrate
       end
 
       def current_values
-        data || [display_placeholder]
+        data
       end
 
       def size
@@ -38,7 +38,7 @@ module Administrate
 
       def display_placeholder
         options.fetch(:placeholder) do
-          format('Select a %<association>s', association: associated_class.name)
+          format('Select %<association>ss...', association: associated_class.name)
         end
       end
 
