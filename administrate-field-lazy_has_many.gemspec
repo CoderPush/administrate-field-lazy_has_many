@@ -2,7 +2,7 @@ require_relative 'lib/administrate/field/lazy_has_many/version'
 
 Gem::Specification.new do |spec|
   spec.name          = "administrate-field-lazy_has_many"
-  spec.version       = Administrate::Field::LazyHasMany::VERSION
+  spec.version       = Administrate::Field::LazyHasManyVersion::VERSION
   spec.authors       = ["Harley Trung"]
   spec.email         = ["harley@coderpush.com"]
 
@@ -25,4 +25,8 @@ Gem::Specification.new do |spec|
   spec.bindir        = "exe"
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ["lib"]
+
+  spec.add_development_dependency 'administrate'
+  spec.add_development_dependency 'bundler', '~> 2.0'
+  spec.add_development_dependency 'rails'
 end
