@@ -75,6 +75,7 @@
   border: 1px solid #ccc;
   background-color: white;
   padding: 4px;
+  min-height: 36px;
 }
 .selected-data:hover, .selected-data:active {
   border: 1px solid #999;

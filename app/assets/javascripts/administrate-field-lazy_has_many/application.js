@@ -5,11 +5,11 @@ function bindLazyHasManys() {
     const target = lazySelect.querySelector('input[type="hidden"]')
     const input = lazySelect.querySelector('input[type="search"]')
     const selectedData = lazySelect.querySelector('.selected-data')
+    let removeItemX
     const popout = lazySelect.querySelector('[data-target="popout"]')
     const output = lazySelect.querySelector('[data-target="output"]')
     const select = output.querySelector('select')
-    const pickedValues = new Set()
-    const pickedLabels = new Set()
+    const pickedValues = {}
 
     const options = JSON.parse(lazySelect.getAttribute('data-lazy-has-many'))
 
@@ -88,6 +88,10 @@ function bindLazyHasManys() {
       popout.classList.remove('active')
     }
 
+    function removeClickedItem(e) {
+      removeValue(e.currentTarget.dataset.remove)
+    }
+
     input.addEventListener('input', onQuery)
     selectedData.addEventListener('click', showPopout)
 
@@ -98,20 +102,31 @@ function bindLazyHasManys() {
       }
     })
 
-    function pickValue(value, label) {
-      // TODO: remove if duplicate
-      pickedValues.add(value)
-      pickedLabels.add(label)
-
-      target.value = JSON.stringify(Array.from(pickedValues))
-      selectedData.innerHTML = Array.from(pickedLabels).map(e => `
+    function renderSelectedData(pickedValues) {
+      target.value = JSON.stringify(Object.keys(pickedValues))
+      selectedData.innerHTML = Object.entries(pickedValues).map(e => `
       <span class="badge badge-primary mr-1">
-        ${e}
-        <button type="button" class="close" aria-label="Dismiss">
+        ${e[1]}
+        <button type="button" class="close" aria-label="Dismiss" data-remove="${e[0]}">
           <span aria-hidden="true">&times;</span>
         </button>
       </span>
       `).join("")
+    }
+
+
+    function removeValue(value) {
+      delete pickedValues[value]
+      renderSelectedData(pickedValues)
+    }
+
+    function pickValue(value, label) {
+      // TODO: remove if duplicate
+      pickedValues[value] = label
+      renderSelectedData(pickedValues)
+
+      removeItemX = lazySelect.querySelectorAll('.selected-data .close')
+      removeItemX.forEach(e => e.addEventListener('click', removeClickedItem))
 
       hidePopout()
     }
