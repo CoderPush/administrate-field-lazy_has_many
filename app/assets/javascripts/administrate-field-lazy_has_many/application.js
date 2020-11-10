@@ -4,7 +4,7 @@ function bindLazyHasManys() {
   lazySelects.forEach(lazySelect => {
     const target = lazySelect.querySelector('input[type="hidden"]')
     const input = lazySelect.querySelector('input[type="search"]')
-    const button = lazySelect.querySelector('.selected-data')
+    const selectedData = lazySelect.querySelector('.selected-data')
     const popout = lazySelect.querySelector('[data-target="popout"]')
     const output = lazySelect.querySelector('[data-target="output"]')
     const select = output.querySelector('select')
@@ -89,7 +89,7 @@ function bindLazyHasManys() {
     }
 
     input.addEventListener('input', onQuery)
-    button.addEventListener('click', showPopout)
+    selectedData.addEventListener('click', showPopout)
 
     document.addEventListener('click', (e) => {
       const lazy = e.target && e.target.closest('[data-component="lazy-has-many"]')
@@ -104,7 +104,7 @@ function bindLazyHasManys() {
       pickedLabels.add(label)
 
       target.value = JSON.stringify(Array.from(pickedValues))
-      button.innerHTML = Array.from(pickedLabels).map(e => `
+      selectedData.innerHTML = Array.from(pickedLabels).map(e => `
       <span class="badge badge-primary mr-1">
         ${e}
         <button type="button" class="close" aria-label="Dismiss">
@@ -139,7 +139,7 @@ function bindLazyHasManys() {
       )
     })
 
-    button.removeAttribute('disabled')
+    selectedData.removeAttribute('disabled')
   })
 }
 

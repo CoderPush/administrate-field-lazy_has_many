@@ -70,3 +70,12 @@
   color: inherit;
   text-shadow: none;
 }
+
+.selected-data {
+  border: 1px solid #ccc;
+  background-color: white;
+  padding: 4px;
+}
+.selected-data:hover, .selected-data:active {
+  border: 1px solid #999;
+}
