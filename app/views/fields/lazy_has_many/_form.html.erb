@@ -17,9 +17,13 @@
   <%# end %>
 
 
-  <%= f.hidden_field(field.permitted_attribute.keys[0]) %>
+  <%= f.hidden_field(field.attribute_key) %>
 
-  <button type="button" disabled="disabled" class="button lazy_has_many__button"><%= field.current_value %></button>
+  <button type="button" disabled="disabled" class="button lazy_has_many__button">
+    <% field.current_values.each do |value| %>
+      <%= value %>, 
+    <% end %>
+  </button>
 
   <div class="popout lazy_has_many__popout" data-target="popout">
     <input type="search" class="lazy_has_many__popout_search" placeholder="Search..." aria-label="Search input">

@@ -15,7 +15,7 @@ function bindLazyHasManys() {
     let lastResult = undefined
     let lastDebounce = undefined
 
-    function onQuery (event) {
+    function onQuery(event) {
       const value = event.currentTarget.value
 
       if (controller) {
@@ -121,7 +121,7 @@ function bindLazyHasManys() {
 
       pickValue(
         e.currentTarget.value,
-        e.currentTarget.selectedOptions[0].textContent
+        e.currentTarget.textContent
       )
     })
 

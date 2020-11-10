@@ -10,8 +10,8 @@ module Administrate
 
       class Error < StandardError; end
       class Engine < ::Rails::Engine
-        # Administrate::Engine.add_javascript 'administrate-field-lazy_has_many/application'
-        # Administrate::Engine.add_stylesheet 'administrate-field-lazy_has_many/application'
+        Administrate::Engine.add_javascript 'administrate-field-lazy_has_many/application'
+        Administrate::Engine.add_stylesheet 'administrate-field-lazy_has_many/application'
 
         isolate_namespace Administrate
       end
@@ -28,8 +28,8 @@ module Administrate
         options.fetch(:label_attribute) { 'name' }
       end
 
-      def current_value
-        display_placeholder
+      def current_values
+        data || [display_placeholder]
       end
 
       def size
