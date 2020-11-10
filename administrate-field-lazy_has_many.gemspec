@@ -6,17 +6,16 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Harley Trung"]
   spec.email         = ["harley@coderpush.com"]
 
-  spec.summary       = %q{TODO: Write a short summary, because RubyGems requires one.}
-  spec.description   = %q{TODO: Write a longer description or delete this line.}
-  spec.homepage      = "TODO: Put your gem's website or public repo URL here."
+  spec.summary       = %q{When you have way too many records in has_many and want to lazily load the relation in dropdown.}
+  spec.homepage      = "https://github.com/CoderPush/administrate-field-lazy_has_many"
   spec.license       = "MIT"
   spec.required_ruby_version = Gem::Requirement.new(">= 2.3.0")
 
-  spec.metadata["allowed_push_host"] = "TODO: Set to 'http://mygemserver.com'"
+  # spec.metadata["allowed_push_host"] = "TODO: Set to 'http://mygemserver.com'"
 
   spec.metadata["homepage_uri"] = spec.homepage
-  spec.metadata["source_code_uri"] = "TODO: Put your gem's public repo URL here."
-  spec.metadata["changelog_uri"] = "TODO: Put your gem's CHANGELOG.md URL here."
+  spec.metadata["source_code_uri"] = "https://github.com/CoderPush/administrate-field-lazy_has_many"
+  spec.metadata["changelog_uri"] = "https://github.com/CoderPush/administrate-field-lazy_has_many/releases"
 
   # Specify which files should be added to the gem when it is released.
   # The `git ls-files -z` loads the files in the RubyGem that have been added into git.
